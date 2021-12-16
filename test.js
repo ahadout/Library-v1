@@ -9,12 +9,13 @@ submit.addEventListener('click', function addBook(event){
     //get values
     let bookName = document.getElementById("bookName").value;
     let author = document.getElementById("author").value;
+    let authorEmail = document.getElementById("authorEmail").value;
     let language = document.getElementById("language").value;
     let type = document.querySelector('input[name="Type"]:checked').value;
     let date = document.getElementById("date").value;
     let price = document.getElementById("price").value;
 
-    if ((bookName == "") || (author == "") || (date == "") || (price == "") || (language == "Language") || (language == "") ){
+    if ((bookName == "") || (author == "") || (authorEmail == "") || (date == "") || (price == "") || (language == "Language") || (language == "") ){
         alert("fill all blanks");
     }
     else if((bookName.length > 30) || (author.length > 30)){
@@ -35,22 +36,26 @@ submit.addEventListener('click', function addBook(event){
         var cell6 = row.insertCell(5);
         var cell7 = row.insertCell(6);
         var cell8 = row.insertCell(7);
+        var cell9 = row.insertCell(8)
 
         //add values to table cells
         cell1.innerHTML = bookName;
         cell2.innerHTML = author;
-        cell3.innerHTML = language;
-        cell4.innerHTML = type;
-        cell5.innerHTML = date;
-        cell6.innerHTML = price;
-        cell7.innerHTML = '<button type="button" value="Edit" class="modify" id="modify" onclick="ModifyRow(this)">Modify</button>';
-        cell8.innerHTML = '<button class="delete" onclick="deleteRow(this)">Delete</button>';
+        cell3.innerHTML = authorEmail;
+        cell4.innerHTML = language;
+        cell5.innerHTML = type;
+        cell6.innerHTML = date;
+        cell7.innerHTML = price;
+        cell8.innerHTML = '<button type="button" value="Edit" class="modify" id="modify" onclick="ModifyRow(this)">Modify</button>';
+        cell9.innerHTML = '<button class="delete" onclick="deleteRow(this)">Delete</button>';
 
         //make the input boxes empty again
         document.getElementById("bookName").value = "";
         document.getElementById("author").value = "";
         document.getElementById("date").value = "";
         document.getElementById("price").value = "";
+        document.getElementById("authorEmail").value = "";
+
     }
 });
 //click on delete button to delete row
@@ -67,12 +72,8 @@ function resetForm(){
     document.getElementById("author").value = "";
     document.getElementById("date").value = "";
     document.getElementById("price").value = "";
-    document.getElementById("language").value = ""; 
-    var x = document.getElementsByName("Type");
-    var i;
-    
-    var type = document.querySelector('input[name="Type"]:checked').value;
-
+    document.getElementById("language").value = "";
+    document.getElementById("authorEmail").value = "";
 }
 
 // edit       
@@ -82,22 +83,25 @@ function ModifyRow(r){
     if(document.getElementById("modify").value == "Edit"){   
         document.getElementById("bookName").value = R.cells[0].innerHTML;
         document.getElementById("author").value = R.cells[1].innerHTML;
-        document.getElementById("price").value = R.cells[5].innerHTML;
-        document.getElementById("date").value = R.cells[4].innerHTML;
+        document.getElementById("authorEmail").value = R.cells[2].innerHTML;
+        document.getElementById("language").value = R.cells[3].innerHTML;
+        document.getElementById("price").value = R.cells[6].innerHTML;
+        document.getElementById("date").value = R.cells[5].innerHTML;
         language = R.cells[2].innerHTML;
-        document.querySelector('input[name="Type"]:checked').value = R.cells[3].innerHTML;
+        document.querySelector('input[name="Type"]:checked').value = R.cells[4].innerHTML;
 
-        document.getElementById("modify").value="save"
+        document.getElementById("modify").value = "save";
         document.getElementById('submit').setAttribute("disabled","true");         
     }     
     else{
         R.cells[0].innerHTML = document.getElementById("bookName").value;
         R.cells[1].innerHTML =  document.getElementById("author").value;
-        R.cells[5].innerHTML =  document.getElementById("price").value;
-        R.cells[4].innerHTML =  document.getElementById("date").value;
-        R.cells[2].innerHTML =  document.getElementById("language").value;
-        R.cells[3].innerHTML = document.querySelector('input[name="Type"]:checked').value 
-        document.getElementById("modify").value = "Edit"
+        R.cells[2].innerHTML =  document.getElementById("authorEmail").value;
+        R.cells[6].innerHTML =  document.getElementById("price").value;
+        R.cells[5].innerHTML =  document.getElementById("date").value;
+        R.cells[3].innerHTML =  document.getElementById("language").value;
+        R.cells[4].innerHTML = document.querySelector('input[name="Type"]:checked').value 
+        document.getElementById("modify").value = "Edit";
         document.getElementById('submit').removeAttribute("disabled");  
         resetForm();          
     } 
